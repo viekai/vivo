@@ -10,7 +10,7 @@ namespace Dex
         struct stat st;
         name_ = name; 
         stat(name, &st);
-
-        void* add = mmap(NULL, );
+//        void* add = mmap(NULL, );
+        return NULL;
     }
 }
