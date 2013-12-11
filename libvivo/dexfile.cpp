@@ -1,7 +1,10 @@
 #include "dexfile.h"
+#include "util.h"
+
 #include <unistd.h>
 #include <sys/mman.h> 
 #include <sys/stat.h>
+
 
 namespace Dex
 {
