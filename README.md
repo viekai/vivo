@@ -9,4 +9,5 @@
 
 ++2013年12月14日
 * Fix the DECHECK bug, finish the dexOpen function using mmap 
+* Add the dexHead in the DexFile
 
