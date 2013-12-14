@@ -9,8 +9,8 @@ using std::string;
 int main()
 {
     string str = "/home/work/vivo/main.dex";
-
     vivo::DexFile dexFile(str);
+
     dexFile.dexOpen();
     dexFile.dexParse();
 
