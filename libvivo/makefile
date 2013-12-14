@@ -1,7 +1,8 @@
 SOURCE_DIR := .\
-	  util
+	  util\
+	  ../
 
-SOURCE := $(foreach d, $(SOURCE_DIR), $(wildcard $(d)/*.cpp))
+SOURCE := $(foreach d, $(SOURCE_DIR), $(abspath $(wildcard $(d)/*.cpp)))
 
 LOCAL_INCLUDE := $(SOURCE_DIR) 
 
@@ -11,7 +12,7 @@ CFLAGS += $(LOCAL_CFLAGS)
 
 INCLUDE_ += $(LOCAL_INCLUDE)
 
-INCLUDE = $(foreach n, $(INCLUDE_), $(addprefix -I , $(n)))
+INCLUDE = $(foreach n, $(INCLUDE_), $(addprefix -I , $(abspath $(n))))
 
 
 OUT_DIR_ := $(addprefix $(OUT_DIR), lib/)

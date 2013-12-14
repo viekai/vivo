@@ -1,22 +1,24 @@
 #ifndef VIVO_DEXFILE_H_
 #define VIVO_DEXFILE_H_
 #include <stdio.h>
+#include <string>
 
-namespace Dex
+using std::string;
+namespace vivo
 {
 class DexFile
 {
     public:
-    DexFile(char* name) : 
+    DexFile(const string& name) :
         name_(name),
         startaddr_(NULL)
     {
     }
-
-    void* open(char *name);
+    void* dexOpen();
+    bool dexParse();
 
     private:
-        char* name_;
+        const string& name_;
         void* startaddr_;
 };
 }
