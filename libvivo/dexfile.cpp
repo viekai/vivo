@@ -62,6 +62,19 @@ namespace vivo
         return reinterpret_cast<const char*>(stringData + Leb128::uleb128Length(stringData));
     }
 
+    const char* DexFile::TypeDataById(uint32_t idx)
+    {
+        if(kNoIdx == idx)
+            return "";
+        const TypeIdItem& idItem = typeData_[idx];
+        return StringDataById(idItem.descript_idx_);
+    }
+
+#if 0
+    const char* GetProtoItemById(uint32_t idx) 
+    {
+    }
+#endif
 
 
 }

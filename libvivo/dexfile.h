@@ -90,7 +90,26 @@ class DexFile
         DISALLOW_COPY_AND_ASSIGN(StringIdItem);
     };
 
+    struct TypeIdItem
+    {
+        uint32_t descript_idx_;
+
+    private:
+        DISALLOW_COPY_AND_ASSIGN(TypeIdItem);
+    };
+
+    struct ProtoIdItem
+    {
+       uint32_t  shorty_idx_; 
+       uint32_t  return_type_idx;
+       uint32_t  parameters_off_;
+
+    private:
+        DISALLOW_COPY_AND_ASSIGN(ProtoIdItem);
+    };
+
     const char* StringDataById(uint32_t idx);
+    const char* TypeDataById(uint32_t   idx);
 
     private:
         const string&        name_;
@@ -99,6 +118,8 @@ class DexFile
         void*                startAddr_;
         DexHead*             head_;
         StringIdItem*        stringData_;
+        TypeIdItem*          typeData_;
+        ProtoIdItem*         protoIdItem_;
 };
 }
 #endif
