@@ -16,17 +16,35 @@ class DexFile
     static const uint32_t       kNoIdx = 0xffffffff;
 
 
-    DexFile(const string& name) :
-        name_(name),
-        startAddr_(NULL)
-    {
-    }
+    DexFile(const string& name); 
 
     ~DexFile();
 
-    void* dexOpen();
+    void* dexOpen(const string& name);
     bool dexParse();
 
+    enum 
+    {
+        ACC_PUBLIC          = 0x1,
+        ACC_PRIVATE         = 0x2,
+        ACC_PROTECTED       = 0x4, 
+        ACC_STATIC          = 0x8,
+        ACC_FINAL           = 0x10,
+        ACC_SYNCHRONIZED    = 0x20,
+        ACC_VOLATIVE        = 0x40,
+        ACC_BRIDGE          = 0x40,
+        ACC_TRANSINET       = 0x80,
+        ACC_VARARGS         = 0x80,
+        ACC_NATIVE          = 0x100,
+        ACC_INTERFACE       = 0x200,
+        ACC_ABSTRACT        = 0x400,
+        ACC_STRICT          = 0x800,
+        ACC_SYNTHETIC       = 0x1000,
+        ACC_ANNOTATION      = 0x2000,
+        ACC_ENUM            = 0x4000,
+        ACC_CONSTRUCTOR     = 0x10000,
+        ACC_DECLARED_SYNCHRONIZED = 0x20000,
+    }AccessFlag;
     /*
      * Head for dex
      */
@@ -101,25 +119,39 @@ class DexFile
     struct ProtoIdItem
     {
        uint32_t  shorty_idx_; 
-       uint32_t  return_type_idx;
+       uint32_t  return_type_idx_;
        uint32_t  parameters_off_;
 
     private:
         DISALLOW_COPY_AND_ASSIGN(ProtoIdItem);
     };
 
+    struct ClassDefItem 
+    {
+       uint32_t  class_idx_;            //type_ids
+       uint32_t  access_flags_;         //access flags
+       uint32_t  superclass_idx_;       //type_ids
+       uint32_t  interfaces_off_;       //0 or type_ids
+       uint32_t  soure_file_idx_;       //string_ids
+       uint32_t  annotations_off_;      //0 or annotations_dircetor_item
+       uint32_t  class_data_off_;       //0 or offset to class_data_item
+       uint32_t  static_values_off_;    //0 or encoded_array_item
+    private:
+       DISALLOW_COPY_AND_ASSIGN(ClassDefItem);
+    };
+
     const char* StringDataById(uint32_t idx);
     const char* TypeDataById(uint32_t   idx);
+    const ProtoIdItem& GetProtoItemById(uint32_t idx); 
+    const ClassDefItem& GetClassDefItemById(uint32_t idx);
 
     private:
-        const string&        name_;
-        uint32_t             size_;
-        int                  fd;
         void*                startAddr_;
-        DexHead*             head_;
-        StringIdItem*        stringData_;
-        TypeIdItem*          typeData_;
-        ProtoIdItem*         protoIdItem_;
+        const DexHead*             head_;
+        const StringIdItem*        stringData_;
+        const TypeIdItem*          typeData_;
+        const ProtoIdItem*         protoIdItem_;
+        const ClassDefItem*        classDefItem_;
 };
 }
 #endif

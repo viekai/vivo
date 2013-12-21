@@ -18,20 +18,22 @@ namespace vivo
 
     DexFile::~DexFile()
     {
-        if(fd)
-            close(fd);
-
-        munmap(startAddr_, size_);
     }
 
-    void* DexFile::dexOpen()
+    DexFile::DexFile(const string& name) 
+    {
+        dexOpen(name);
+        dexParse();
+    }
+
+    void* DexFile::dexOpen(const string& name)
     {
         struct stat st;
-        DECHECKNE(name_.size(), 0);
-        fd = open(name_.c_str(), O_RDONLY);
+        DECHECKNE(name.size(), 0);
+        int fd = open(name.c_str(), O_RDONLY);
         DECHECKNE(fd, 0);
-        stat(name_.c_str(), &st);
-        size_ = st.st_size;
+        stat(name.c_str(), &st);
+        int size_ = st.st_size;
 
         startAddr_ = mmap(NULL, size_, PROT_READ, MAP_PRIVATE, fd, 0);
 
@@ -47,8 +49,10 @@ namespace vivo
     bool DexFile::dexParse()
     {
         head_ = reinterpret_cast<DexFile::DexHead*>(startAddr_);
-        std::cout<<"Dex Head is" << " " << head_->magic_ << " " << head_->headerSize_ << std::endl;
         stringData_ = reinterpret_cast<StringIdItem*>(static_cast<ubyte_t*>(startAddr_) + head_->stringIdsOff_);
+        typeData_ = reinterpret_cast<TypeIdItem*>(static_cast<ubyte_t*>(startAddr_) + head_->typeIdsOff_);
+        protoIdItem_ = reinterpret_cast<ProtoIdItem*>(static_cast<ubyte_t*>(startAddr_) + head_->protoIdsOff_);
+        classDefItem_ = reinterpret_cast<ClassDefItem*>(static_cast<ubyte_t*>(startAddr_) + head_->classDefOff_);
 
         return true;
     }
@@ -70,11 +74,14 @@ namespace vivo
         return StringDataById(idItem.descript_idx_);
     }
 
-#if 0
-    const char* GetProtoItemById(uint32_t idx) 
+    const DexFile::ProtoIdItem& DexFile::GetProtoItemById(uint32_t idx) 
     {
+        return protoIdItem_[idx];
     }
-#endif
 
+    const DexFile::ClassDefItem& DexFile::GetClassDefItemById(uint32_t idx)
+    {
+        return classDefItem_[idx];
+    }
 
 }
