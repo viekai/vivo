@@ -13,12 +13,16 @@ class DexFile
     static const ubyte_t        kDefaultMagic[8];
     static const uint32_t       kEndianConst = 0x12345678;
     static const uint32_t       kReversEndianConst = 0x78563412;
+    static const uint32_t       kNoIdx = 0xffffffff;
+
 
     DexFile(const string& name) :
         name_(name),
         startAddr_(NULL)
     {
     }
+
+    ~DexFile();
 
     void* dexOpen();
     bool dexParse();
@@ -51,17 +55,50 @@ class DexFile
        uint32_t     classDefOff_;
        uint32_t     dataSize_;
        uint32_t     dataOff_;
-    };
-
-    struct DexField
-    {
-
-    };
 
     private:
-        const string&   name_;
-        void*           startAddr_;
-        DexHead         head_;
+        DISALLOW_COPY_AND_ASSIGN(DexHead);
+    };
+
+    struct MapItem
+    {
+        uint16_t    type_;
+        uint16_t    unused_;
+        uint32_t    size_;               //count of number of items to be found in the offset
+        uint32_t    offset_;
+
+    private:
+        DISALLOW_COPY_AND_ASSIGN(MapItem);
+    };
+
+    /* 
+     *Map List
+     *{
+     *   uint32_t size;
+     *   MapItem mapItem[size];
+     *}
+     * */
+    struct DexField
+    {
+    };
+
+    struct StringIdItem
+    {
+        uint32_t offset_;
+
+    private:
+        DISALLOW_COPY_AND_ASSIGN(StringIdItem);
+    };
+
+    const char* StringDataById(uint32_t idx);
+
+    private:
+        const string&        name_;
+        uint32_t             size_; 
+        int                  fd;
+        void*                startAddr_;
+        DexHead*             head_;
+        StringIdItem*        stringData_;
 };
 }
 #endif
