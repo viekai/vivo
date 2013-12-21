@@ -52,7 +52,7 @@ namespace vivo
 
         return true;
     }
-    
+
     const char* DexFile::StringDataById(uint32_t id)
     {
         if(kNoIdx == id)

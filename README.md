@@ -8,6 +8,9 @@
 * Add LOG, CHECK tools
 
 ++2013年12月14日
-* Fix the DECHECK bug, finish the dexOpen function using mmap 
+* Fix the DECHECK bug, finish the dexOpen function using mmap
 * Add the dexHead in the DexFile
 
+++2013年12月21日
+* Add readUleb128, MUTF-8 与Ascill类似
+* Add DISALLOW_COPY_AND_ASSIGN to avoid been assigned

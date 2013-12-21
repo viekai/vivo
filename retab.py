@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import sys, os, stat, re
 
-fileTypes = ["c", "h", "cpp"]
+fileTypes = ["c", "h", "cpp", "md"]
 anchorFile=".LOGLOG"
 
 def help():

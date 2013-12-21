@@ -12,7 +12,7 @@ struct LebItem
     union
     {
         uint32_t  udata_;
-        int32_t   sdata_; 
+        int32_t   sdata_;
     };
 };
 

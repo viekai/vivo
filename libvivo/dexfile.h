@@ -71,7 +71,7 @@ class DexFile
         DISALLOW_COPY_AND_ASSIGN(MapItem);
     };
 
-    /* 
+    /*
      *Map List
      *{
      *   uint32_t size;
@@ -94,7 +94,7 @@ class DexFile
 
     private:
         const string&        name_;
-        uint32_t             size_; 
+        uint32_t             size_;
         int                  fd;
         void*                startAddr_;
         DexHead*             head_;
