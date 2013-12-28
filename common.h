@@ -33,10 +33,15 @@ typedef int                     int32_t;
 #define DECHECKNE(e, op2)       CHECK((e), (op2), !=)
 #define CHECK(op1, op2, op)     _CHECK(op1, op2, op)
 
-#define abort()                 (*(int*)0 = 0)
+#define abort() \
+    do{\
+        std::cout<<__FILE__<<":"<<__LINE__<<":"<<"+++++++++abort+++++++++"<<std::endl;\
+        (*(int*)0 = 0);\
+    }while(0)
 
 #else
 #define DECHECK(e)
 #endif
 
+#define MANAGED __attribute__((aligned(4)))
 #endif

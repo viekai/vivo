@@ -23,7 +23,7 @@ class DexFile
     void* dexOpen(const string& name);
     bool dexParse();
 
-    enum 
+    enum AccessFlag
     {
         ACC_PUBLIC          = 0x1,
         ACC_PRIVATE         = 0x2,
@@ -44,7 +44,7 @@ class DexFile
         ACC_ENUM            = 0x4000,
         ACC_CONSTRUCTOR     = 0x10000,
         ACC_DECLARED_SYNCHRONIZED = 0x20000,
-    }AccessFlag;
+    };
     /*
      * Head for dex
      */

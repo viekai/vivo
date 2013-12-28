@@ -83,5 +83,4 @@ namespace vivo
     {
         return classDefItem_[idx];
     }
-
 }
