@@ -4,7 +4,7 @@ SOURCE_DIR := .\
 
 SOURCE := $(foreach d, $(SOURCE_DIR), $(wildcard $(abspath $(d))/*.cpp))
 LOCAL_INCLUDE := $(SOURCE_DIR) 
-LOCAL_INCLUDE += ../
+LOCAL_INCLUDE += ../ gtest/include/
 
 CFLAGS += $(LOCAL_CFLAGS)
 INCLUDE_ += $(LOCAL_INCLUDE)
@@ -12,11 +12,22 @@ INCLUDE = $(foreach n, $(INCLUDE_), $(addprefix -I , $(abspath $(n))))
 
 OUT_DIR_ := $(addprefix $(OUT_DIR), bin/)
 TARGET := $(addprefix $(OUT_DIR_), main)
-LIB := -L ../out/lib/libvivo
+LIBPATH = -L $(LIBDIR)
+LIB = -lvivo -lgtest -lpthread
 
-all : $(FILE)
-	$(CC)  $(CFLAGS) $(SOURCE) $(INCLUDE) $(LIB) -o $(TARGET) 
+
+all : Main
+
+Main : Gtest 
+	@$(CC)  $(CFLAGS) $(SOURCE) $(INCLUDE) $(LIBPATH) $(LIB) -o $(TARGET) 
 	@echo Install: $(TARGET)
+
+Gtest:
+	@echo Make: make gtest
+	@cd gtest && make
+	@echo Install: libgtest.a
+	@cp gtest/lib/.libs/libgtest.a $(LIBDIR)
 
 clean:
 	rm -rf $(TARGET) 
+

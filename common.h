@@ -33,7 +33,7 @@ typedef int                     int32_t;
 #define DECHECKNE(e, op2)       CHECK((e), (op2), !=)
 #define CHECK(op1, op2, op)     _CHECK(op1, op2, op)
 
-#define abort() \
+#define ABORT() \
     do{\
         std::cout<<__FILE__<<":"<<__LINE__<<":"<<"+++++++++abort+++++++++"<<std::endl;\
         (*(int*)0 = 0);\

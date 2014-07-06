@@ -7,7 +7,7 @@ namespace vivo
     inline T ObjectArray<T>::at(uint32_t idx)
     {
         if(!IsValid(idx)) {
-            abort();
+            ABORT();
             return reinterpret_cast<T>(0);
         }
         else
@@ -18,7 +18,7 @@ namespace vivo
     inline void ObjectArray<T>::set(uint32_t idx, T data)
     {
         if(!IsValid(idx)) {
-            abort();
+            ABORT();
             return;
         }
         *(reinterpret_cast<T*>(first_element_ + sizeof(T)*idx)) = data;

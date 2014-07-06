@@ -40,7 +40,7 @@ namespace vivo
         if((reinterpret_cast<long>(startAddr_) == -1))
         {
             std::cout<< strerror(errno)<<std::endl;
-            abort();
+            ABORT();
         }
 
         return startAddr_;

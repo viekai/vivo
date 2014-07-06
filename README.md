@@ -14,3 +14,7 @@
 ++2013年12月21日
 * Add readUleb128, MUTF-8 与Ascill类似
 * Add DISALLOW_COPY_AND_ASSIGN to avoid been assigned
+
+++2014年07月06日
+* Add gtest arch
+* change the makefile
