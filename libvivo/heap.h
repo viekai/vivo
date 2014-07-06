@@ -9,7 +9,7 @@ namespace vivo
 class Heap
 {
 public:
-    static void* allocObject(uint32_t size) 
+    static void* allocObject(uint32_t size)
     {
         return operator new(size);
     }

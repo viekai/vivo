@@ -7,7 +7,7 @@
 
 using namespace std;
 
-bool fun1() {
+bool DexFileOpenTest_() {
     string str = "main.dex";
     string except = "Switch.java";
     vivo::DexFile dexFile(str);
@@ -18,8 +18,24 @@ bool fun1() {
     return (output == except);
 }
 
-TEST_F(FooTest, DexFileTest) {
-  EXPECT_EQ(true, fun1());
+bool DexFileLoadClassItem_() {
+    string str = "main.dex";
+    vivo::DexFile dexFile(str);
+    const vivo::DexFile::ClassDefItem* item =  dexFile.LoadClassFromDex("LSwitch;");
+    if (NULL == item) {
+        return false;
+    }
+
+    const char* classDef = dexFile.TypeDataById(item->class_idx_);
+    return (0 == strcmp(classDef, "LSwitch;"));
+}
+
+TEST_F(FooTest, DexFileOpenTest) {
+  EXPECT_EQ(true, DexFileOpenTest_());
+}
+
+TEST_F(FooTest, DexFileLoad) {
+  EXPECT_EQ(true, DexFileLoadClassItem_());
 }
 
 int main(int argc, char **argv)

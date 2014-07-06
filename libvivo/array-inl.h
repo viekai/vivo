@@ -31,7 +31,7 @@ namespace vivo
     }
     inline void Array::setLength(uint32_t compontLength)
     {
-       size_ = compontLength; 
+       size_ = compontLength;
     }
 }
 

@@ -11,15 +11,14 @@ class VivoField;
 class VivoMethod;
 class VivoClass;
 
-class DexCache
-{
+class DexCache {
 public:
     inline const VivoMethod* GetResolvedMethod(uint32_t idx) {
         return resolvedMethod.at(idx);
     }
 
     inline const VivoField*  GetResolvedField(uint32_t idx) {
-        return resolvedField.at(idx); 
+        return resolvedField.at(idx);
     }
 
     inline const VivoClass*  GetFesolvedClass(uint32_t idx){
@@ -31,29 +30,28 @@ public:
     }
 
     inline void  SetResolvedField(uint32_t idx, VivoField* field) {
-        resolvedField.set(idx, field); 
+        resolvedField.set(idx, field);
     }
 
     inline void SetFesolvedClass(uint32_t idx, VivoClass* vclass){
         resolvedClass.set(idx, vclass);
     }
+
 private:
     ObjectArray<VivoMethod*> resolvedMethod;
     ObjectArray<VivoField*>  resolvedField;
     ObjectArray<VivoClass*>  resolvedClass;
+    DexFile* dexFile_;
 };
 
-class VivoField
-{
+class VivoField {
 };
 
-class VivoMethod
-{
+class VivoMethod {
 private:
 };
 
-class VivoClass
-{
+class VivoClass {
 public:
     const char* GetClassName();
     void SetClassName();
@@ -63,8 +61,9 @@ public:
 
     void SetMethod(uint32_t idx, VivoMethod* method);
     VivoMethod* GetMethod(uint32_t idx);
-
     void SetClassName(const char* name);
+
+    VivoClass* Alloc();
 
     DexCache* dexCache_;
 

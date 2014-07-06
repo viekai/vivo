@@ -16,18 +16,17 @@ class DexFile
     static const uint32_t       kNoIdx = 0xffffffff;
 
 
-    DexFile(const string& name); 
+    DexFile(const string& name);
 
     ~DexFile();
 
     void* dexOpen(const string& name);
     bool dexParse();
 
-    enum AccessFlag
-    {
+    enum AccessFlag {
         ACC_PUBLIC          = 0x1,
         ACC_PRIVATE         = 0x2,
-        ACC_PROTECTED       = 0x4, 
+        ACC_PROTECTED       = 0x4,
         ACC_STATIC          = 0x8,
         ACC_FINAL           = 0x10,
         ACC_SYNCHRONIZED    = 0x20,
@@ -48,8 +47,7 @@ class DexFile
     /*
      * Head for dex
      */
-    struct DexHead
-    {
+    struct DexHead {
        ubyte_t      magic_[8];
        uint32_t     checksum;
        ubyte_t      signature_[20];  //SHA-1 signature(hash) of the rest of the file
@@ -78,8 +76,7 @@ class DexFile
         DISALLOW_COPY_AND_ASSIGN(DexHead);
     };
 
-    struct MapItem
-    {
+    struct MapItem {
         uint16_t    type_;
         uint16_t    unused_;
         uint32_t    size_;               //count of number of items to be found in the offset
@@ -96,29 +93,25 @@ class DexFile
      *   MapItem mapItem[size];
      *}
      * */
-    struct DexField
-    {
+    struct DexField {
     };
 
-    struct StringIdItem
-    {
+    struct StringIdItem {
         uint32_t offset_;
 
     private:
         DISALLOW_COPY_AND_ASSIGN(StringIdItem);
     };
 
-    struct TypeIdItem
-    {
+    struct TypeIdItem {
         uint32_t descript_idx_;
 
     private:
         DISALLOW_COPY_AND_ASSIGN(TypeIdItem);
     };
 
-    struct ProtoIdItem
-    {
-       uint32_t  shorty_idx_; 
+    struct ProtoIdItem {
+       uint32_t  shorty_idx_;
        uint32_t  return_type_idx_;
        uint32_t  parameters_off_;
 
@@ -126,8 +119,7 @@ class DexFile
         DISALLOW_COPY_AND_ASSIGN(ProtoIdItem);
     };
 
-    struct ClassDefItem 
-    {
+    struct ClassDefItem  {
        uint32_t  class_idx_;            //type_ids
        uint32_t  access_flags_;         //access flags
        uint32_t  superclass_idx_;       //type_ids
@@ -142,8 +134,15 @@ class DexFile
 
     const char* StringDataById(uint32_t idx);
     const char* TypeDataById(uint32_t   idx);
-    const ProtoIdItem& GetProtoItemById(uint32_t idx); 
+    const ProtoIdItem& GetProtoItemById(uint32_t idx);
     const ClassDefItem& GetClassDefItemById(uint32_t idx);
+
+    const ClassDefItem* LoadClassFromDex(const char* classDesc);
+
+    const ClassDefItem* LoadClassFromDex(uint32_t typeIdx) {
+        const char* classDesc = TypeDataById(typeIdx);
+        return LoadClassFromDex(classDesc);
+    }
 
     private:
         void*                startAddr_;

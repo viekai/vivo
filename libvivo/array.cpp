@@ -4,7 +4,7 @@
 
 namespace vivo
 {
-Array* Array::Alloc(uint32_t compontLength, uint32_t compontSize)    
+Array* Array::Alloc(uint32_t compontLength, uint32_t compontSize)
 {
     size_t size = compontSize * compontLength + sizeof(Array);
 

@@ -1,3 +1,5 @@
+#ifndef VIVO_TEST_COMMON_H
+#define VIVO_TEST_COMMON_H
 #include "gtest/gtest.h"
 
 using namespace std;
@@ -30,4 +32,4 @@ class FooTest : public ::testing::Test {
 
   // Objects declared here can be used by all tests in the test case for Foo.
 };
-
+#endif
