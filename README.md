@@ -1,20 +1,17 @@
-++2013年12月07日
-* Start the vivo.
+####About VIVO 
+VIVO is about to be an virtual machice for mobile
+This is just for fun
 
-++2013年12月09日
-* Add makefile.
+####Build
+    make
+    ./run.sh
 
-++2013年12月11日
-* Add LOG, CHECK tools
+####What have been done?
 
-++2013年12月14日
-* Fix the DECHECK bug, finish the dexOpen function using mmap
-* Add the dexHead in the DexFile
+ - Open dex file
+ - add gtest arch 
 
-++2013年12月21日
-* Add readUleb128, MUTF-8 与Ascill类似
-* Add DISALLOW_COPY_AND_ASSIGN to avoid been assigned
+####What will be done?
 
-++2014年07月06日
-* Add gtest arch
-* change the makefile
+ - Dex class loader
+ - Heap struct
