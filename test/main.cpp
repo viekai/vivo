@@ -10,23 +10,26 @@ using namespace std;
 bool DexFileOpenTest_() {
     string str = "main.dex";
     string except = "Switch.java";
-    vivo::DexFile dexFile(str);
+    vivo::DexFile* dexFile = vivo::DexFile::Open(str);
+    dexFile->Parse();
 
-    const vivo::DexFile::ClassDefItem& classItem = dexFile.GetClassDefItemById(0);
-    std::string output = dexFile.StringDataById(classItem.soure_file_idx_);
+    const vivo::DexFile::ClassDefItem& classItem = dexFile->GetClassDefItemById(0);
+    std::string output = dexFile->StringDataById(classItem.soure_file_idx_);
 
     return (output == except);
 }
 
 bool DexFileLoadClassItem_() {
     string str = "main.dex";
-    vivo::DexFile dexFile(str);
-    const vivo::DexFile::ClassDefItem* item =  dexFile.LoadClassFromDex("LSwitch;");
+    vivo::DexFile* dexFile = vivo::DexFile::Open(str);
+    dexFile->Parse();
+
+    const vivo::DexFile::ClassDefItem* item =  dexFile->LoadClassFromDex("LSwitch;");
     if (NULL == item) {
         return false;
     }
 
-    const char* classDef = dexFile.TypeDataById(item->class_idx_);
+    const char* classDef = dexFile->TypeDataById(item->class_idx_);
     return (0 == strcmp(classDef, "LSwitch;"));
 }
 

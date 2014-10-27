@@ -4,13 +4,10 @@
 #include<memory.h>
 #include<stdio.h>
 
-namespace vivo
-{
-class Heap
-{
+namespace vivo {
+class Heap {
 public:
-    static void* allocObject(uint32_t size)
-    {
+    static void* allocObject(uint32_t size) {
         return operator new(size);
     }
 };

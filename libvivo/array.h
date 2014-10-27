@@ -3,10 +3,8 @@
 
 #include "common.h"
 
-namespace vivo
-{
-class MANAGED Array
-{
+namespace vivo {
+class MANAGED Array {
 public:
     static Array* Alloc(uint32_t compontLength, uint32_t compontSize);
     bool IsValid(uint32_t idx);
@@ -19,12 +17,12 @@ private:
 
 
 template <class T>
-class ObjectArray : Array
-{
+class ObjectArray : Array {
 public:
     T at(uint32_t idx);
     void set(uint32_t idx, T data);
 
 };
+
 }
 #endif

@@ -19,12 +19,10 @@ namespace vivo
     DexFile::~DexFile() {
     }
 
-    DexFile::DexFile(const string& name) {
-        dexOpen(name);
-        dexParse();
+    DexFile::DexFile(void* startAddr) : startAddr_(startAddr) {
     }
 
-    void* DexFile::dexOpen(const string& name) {
+    DexFile* DexFile::Open(const string& name) {
         struct stat st;
         DECHECKNE(name.size(), 0);
         int fd = open(name.c_str(), O_RDONLY);
@@ -32,31 +30,38 @@ namespace vivo
         stat(name.c_str(), &st);
         int size_ = st.st_size;
 
-        startAddr_ = mmap(NULL, size_, PROT_READ, MAP_PRIVATE, fd, 0);
+        void* startAddr = mmap(NULL, size_, PROT_READ, MAP_PRIVATE, fd, 0);
 
-        if ((reinterpret_cast<long>(startAddr_) == -1)) {
+        if ((reinterpret_cast<long>(startAddr) == -1)) {
+            std::cout<< strerror(errno)<<std::endl;
+            ABORT();
+        }
+        
+        DexFile* dexFile = new DexFile(startAddr);
+        if (dexFile == NULL) {
             std::cout<< strerror(errno)<<std::endl;
             ABORT();
         }
 
-        return startAddr_;
+        return dexFile;
     }
 
-    bool DexFile::dexParse() {
+    bool DexFile::Parse() {
         head_ = reinterpret_cast<DexFile::DexHead*>(startAddr_);
 
-        stringData_ = reinterpret_cast<StringIdItem*>(static_cast<ubyte_t*>(startAddr_) + head_->stringIdsOff_);
-        typeData_ = reinterpret_cast<TypeIdItem*>(static_cast<ubyte_t*>(startAddr_) + head_->typeIdsOff_);
+        stringItem_ = reinterpret_cast<StringIdItem*>(static_cast<ubyte_t*>(startAddr_) + head_->stringIdsOff_);
+        typeItem_ = reinterpret_cast<TypeIdItem*>(static_cast<ubyte_t*>(startAddr_) + head_->typeIdsOff_);
         protoIdItem_ = reinterpret_cast<ProtoIdItem*>(static_cast<ubyte_t*>(startAddr_) + head_->protoIdsOff_);
         classDefItem_ = reinterpret_cast<ClassDefItem*>(static_cast<ubyte_t*>(startAddr_) + head_->classDefOff_);
 
         return true;
     }
 
+    
     const char* DexFile::StringDataById(uint32_t id) {
         if(kNoIdx == id)
             return "";
-        const StringIdItem& idItem = stringData_[id];
+        const StringIdItem& idItem = stringItem_[id];
         ubyte_t* stringData = static_cast<ubyte_t*>(startAddr_) + idItem.offset_;
         return reinterpret_cast<const char*>(stringData + Leb128::uleb128Length(stringData));
     }
@@ -64,7 +69,7 @@ namespace vivo
     const char* DexFile::TypeDataById(uint32_t idx) {
         if(kNoIdx == idx)
             return "";
-        const TypeIdItem& idItem = typeData_[idx];
+        const TypeIdItem& idItem = typeItem_[idx];
         return StringDataById(idItem.descript_idx_);
     }
 
@@ -89,4 +94,5 @@ namespace vivo
 
         return NULL;
     }
+
 }

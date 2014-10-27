@@ -5,10 +5,8 @@
 #include "common.h"
 
 using std::string;
-namespace vivo
-{
-class DexFile
-{
+namespace vivo {
+class DexFile {
     public:
     static const ubyte_t        kDefaultMagic[8];
     static const uint32_t       kEndianConst = 0x12345678;
@@ -16,12 +14,12 @@ class DexFile
     static const uint32_t       kNoIdx = 0xffffffff;
 
 
-    DexFile(const string& name);
+    DexFile(void* startAddr);
 
     ~DexFile();
 
-    void* dexOpen(const string& name);
-    bool dexParse();
+    static DexFile* Open(const string& name);
+    bool Parse();
 
     enum AccessFlag {
         ACC_PUBLIC          = 0x1,
@@ -145,10 +143,10 @@ class DexFile
     }
 
     private:
-        void*                startAddr_;
+        void*                      startAddr_;
         const DexHead*             head_;
-        const StringIdItem*        stringData_;
-        const TypeIdItem*          typeData_;
+        const StringIdItem*        stringItem_;
+        const TypeIdItem*          typeItem_;
         const ProtoIdItem*         protoIdItem_;
         const ClassDefItem*        classDefItem_;
 };

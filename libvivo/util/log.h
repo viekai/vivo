@@ -3,11 +3,9 @@
 
 #include <iostream>
 
-class Log
-{
+class Log {
 public:
-    static void LOGE(const char* msg)
-    {
+    static void LOGE(const char* msg) {
         return;
     }
 };
