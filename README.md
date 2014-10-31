@@ -15,3 +15,6 @@ This is just for fun
 
  - Dex class loader
  - Heap struct
+
+###Question
+ - How to rewrite the libcore and use the libcore ?

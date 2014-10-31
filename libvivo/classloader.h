@@ -9,7 +9,7 @@ class ClassLoader {
 public:
     ClassLoader(const char* class_loader);
     
-    Class* ResovleClass(uint32_t cld); 
+    Class* ResovleClass(uint32_t cld);
 
     Class* FindClass(const char* classname);
    

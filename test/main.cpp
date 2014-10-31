@@ -11,7 +11,6 @@ bool DexFileOpenTest_() {
     string str = "main.dex";
     string except = "Switch.java";
     vivo::DexFile* dexFile = vivo::DexFile::Open(str);
-    dexFile->Parse();
 
     const vivo::DexFile::ClassDefItem& classItem = dexFile->GetClassDefItemById(0);
     std::string output = dexFile->StringDataById(classItem.soure_file_idx_);
@@ -22,7 +21,6 @@ bool DexFileOpenTest_() {
 bool DexFileLoadClassItem_() {
     string str = "main.dex";
     vivo::DexFile* dexFile = vivo::DexFile::Open(str);
-    dexFile->Parse();
 
     const vivo::DexFile::ClassDefItem* item =  dexFile->LoadClassFromDex("LSwitch;");
     if (NULL == item) {

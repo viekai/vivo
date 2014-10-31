@@ -43,6 +43,7 @@ namespace vivo
             ABORT();
         }
 
+        dexFile->Parse();
         return dexFile;
     }
 
@@ -94,5 +95,4 @@ namespace vivo
 
         return NULL;
     }
-
 }
