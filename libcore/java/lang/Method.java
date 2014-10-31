@@ -1,3 +1,3 @@
 package java.lang;
-class Object {
+class Method {
 }

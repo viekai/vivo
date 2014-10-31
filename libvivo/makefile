@@ -15,11 +15,12 @@ INCLUDE_ += $(LOCAL_INCLUDE)
 INCLUDE = $(foreach n, $(INCLUDE_), $(addprefix -I , $(abspath $(n))))
 
 
-OUT_DIR_ := $(addprefix $(OUT_DIR), lib/)
-TARGET := $(addprefix $(OUT_DIR_), libvivo.so)
+LOCAL_OUT := $(addprefix $(OUT_DIR), lib/)
+TARGET := $(addprefix $(LOCAL_OUT), libvivo.so)
 
-all : $(FILE)
-	$(CC)  $(CFLAGS) $(SOURCE) $(INCLUDE) -o $(TARGET) 
+all : 
+	@echo Compiler libvivo...
+	@$(CC)  $(CFLAGS) $(SOURCE) $(INCLUDE) -o $(TARGET) 
 	@echo Install: $(TARGET)
 
 clean:
