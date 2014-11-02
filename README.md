@@ -1,4 +1,4 @@
-####About VIVO 
+####About VIVO
 VIVO is about to be an virtual machice for mobile
 This is just for fun
 
@@ -9,7 +9,7 @@ This is just for fun
 ####What have been done?
 
  - Open dex file
- - add gtest arch 
+ - add gtest arch
 
 ####What will be done?
 

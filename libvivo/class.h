@@ -1,52 +1,15 @@
 #ifndef VIVO_DEX_CLASS_
 #define VIVO_DEX_CLASS_
+#include <string>
 #include "common.h"
-#include "dexfile.h"
 #include "array.h"
+#include "dexfile.h"
 
-namespace vivo
-{
+namespace vivo {
 class Field;
 class Method;
 class Class;
 
-class DexCache {
-public:
-    DexCache(const char* dex_path) {
-        dex_file_ = DexFile::Open(dex_path); 
-        dex_file_->Parse();
-    }
-
-    inline const Method* GetResolvedMethod(uint32_t idx) {
-        return resolvedMethod.at(idx);
-    }
-
-    inline const Field*  GetResolvedField(uint32_t idx) {
-        return resolvedField.at(idx);
-    }
-
-    inline const Class*  GetFesolvedClass(uint32_t idx){
-        return resolvedClass.at(idx);
-    }
-
-    inline void SetResolvedMethod(uint32_t idx, Method* method) {
-        resolvedMethod.set(idx, method);
-    }
-
-    inline void  SetResolvedField(uint32_t idx, Field* field) {
-        resolvedField.set(idx, field);
-    }
-
-    inline void SetFesolvedClass(uint32_t idx, Class* vclass){
-        resolvedClass.set(idx, vclass);
-    }
-
-private:
-    ObjectArray<Method*> resolvedMethod;
-    ObjectArray<Field*>  resolvedField;
-    ObjectArray<Class*>  resolvedClass;
-    DexFile* dex_file_;
-};
 
 class Field {
 };
@@ -67,6 +30,8 @@ public:
     Method* GetMethod(uint32_t idx);
 
     Class* Alloc();
+
+
 private:
     const char*             name_;
     DexFile::AccessFlag     access_;

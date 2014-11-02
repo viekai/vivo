@@ -36,7 +36,7 @@ namespace vivo
             std::cout<< strerror(errno)<<std::endl;
             ABORT();
         }
-        
+
         DexFile* dexFile = new DexFile(startAddr);
         if (dexFile == NULL) {
             std::cout<< strerror(errno)<<std::endl;
@@ -58,7 +58,7 @@ namespace vivo
         return true;
     }
 
-    
+
     const char* DexFile::StringDataById(uint32_t id) {
         if(kNoIdx == id)
             return "";

@@ -2,7 +2,7 @@
 
 if [ $# -eq 1 ];
 then
-    gdb out/bin/main 
+    gdb out/bin/vivod
 else
-    ./out/bin/main
+    ./out/bin/vivod
 fi
