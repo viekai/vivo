@@ -5,7 +5,7 @@
 namespace vivo {
 class Runtime {
 public:
-    Runtime(const char* boot_class_path, 
+    Runtime(const char* boot_class_path,
             const char* class_path_);
 
     void Initilize();

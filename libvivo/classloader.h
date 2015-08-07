@@ -11,6 +11,7 @@ namespace vivo {
 class ClassLoader {
 public:
     ClassLoader(std::string& boot_class_path);
+    ClassLoader(const char* boot_class_path);
 
     Class* ResovleClass(uint32_t cld);
 
@@ -18,55 +19,15 @@ public:
 
     Class* DefineClass(std::string& className);
 
-    class HashClasses {
-    public:
-        Class* find(std::string& str) {
-            std::unordered_map<std::string, Class*>::iterator it = hash_.find(str);
-            return it->second;
-        }
+    void OpenDexFile(std::string& dex_path);
 
-    private:
-        struct HashFunc {
-            std::size_t operator()(std::string k) const {
-                return std::hash<std::string>()(k);
-            }
-        };
-
-        struct HashCompare {
-            bool operator()(std::string name1, std::string name2) const {
-                return strcmp(name1.c_str(), name1.c_str()) == 0;
-            }
-        };
-
-        std::unordered_map<std::string, Class*, HashFunc, HashCompare> hash_;
-    };
-
-    class ClassName {
-        public:
-            ClassName(const char* name) : 
-                source_name_(name),
-                value_(name) {
-                    if (value_.size() != 0) {
-                        for (std::string::size_type i = 0; i < value_.size(); i++) {
-                            if (value_[i] == '.')
-                                value_[i] = '/';
-                        }
-                        value_ = "L" + value_ + ";";
-                    }
-            }
-
-            std::string& Get() {
-                return value_;
-            }
-
-        private:
-            const char* source_name_;
-            std::string value_;
-    };
+    Class* LoadClass(DexFile* dex_file, const DexFile::ClassDefItem* cls_item);
 
 private:
-    DexCache* dex_cache_;
-    HashClasses hash_;
+    uint32_t num_dex_files_;
+    /*use to record the dex files open in this classLinker*/
+    std::vector<DexFile*> dex_files_;
+
 };
 }
 

@@ -71,11 +71,11 @@ class FooTest : public testing::Test {
 
 TEST_F(FooTest, Test1)
  {
-    // you can refer to shared_resource here 
+    // you can refer to shared_resource here
 }
 TEST_F(FooTest, Test2)
  {
-    // you can refer to shared_resource here 
+    // you can refer to shared_resource here
 }
 
 // 在运行每个测试之前运行

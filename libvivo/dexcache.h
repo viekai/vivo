@@ -8,12 +8,6 @@ namespace vivo {
 class DexCache {
 public:
     DexCache(std::string& dex_path) {
-        DexFile* dex_file = NULL;
-        dex_file = DexFile::Open(dex_path.c_str());
-        if (dex_file) {
-            dex_file->Parse();
-            dex_files_.push_back(dex_file);
-        }
     }
 
     inline const Method* GetResolvedMethod(uint32_t idx) {
@@ -36,7 +30,7 @@ public:
         resolvedField.set(idx, field);
     }
 
-    inline void SetResolvedClass(uint32_t idx, Class* vclass){
+    inline void SetResolvedClass(uint32_t idx, Class* vclass) {
         resolvedClass.set(idx, vclass);
     }
 
@@ -45,8 +39,6 @@ private:
     ObjectArray<Field*>  resolvedField;
     ObjectArray<Class*>  resolvedClass;
 
-    uint32_t num_dex_files_;
-    std::vector<DexFile*> dex_files_;
 };
 }
 #endif

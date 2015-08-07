@@ -1,4 +1,5 @@
 #include "log.h"
+#include "util.h"
 #include "common.h"
 #include "dexfile.h"
 #include <string>
@@ -37,7 +38,7 @@ bool ClassHashTableTest_() {
 }
 
 const std::string ClassTestname_(std::string caseName) {
-    vivo::ClassLoader::ClassName case1Name(caseName.c_str());
+    util::ClassName case1Name(caseName.c_str());
     return case1Name.Get().c_str();
 }
 
